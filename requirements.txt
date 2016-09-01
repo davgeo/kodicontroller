@@ -1,0 +1,2 @@
+kodijsonrpc==1.0
+requests==2.6.0
