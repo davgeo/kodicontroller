@@ -5,13 +5,13 @@
 *.pyc
 
 # Virtualenv directory
-pyenv/
+pyenv*
 
 # Ignore cached directories
 __pycache__
 
 # Local tests directory
-tests/
+tests/server_info.py
 
 # Egg info directories
 *.egg-info/
