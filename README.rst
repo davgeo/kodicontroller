@@ -8,7 +8,7 @@ For full details of exactly what functions are available, the necessary paramete
 which must be provided to those functions and exactly what the subsequent processing
 of the response is please refer to the source code directly.
 
-.. warning:: This is a work in progress and not all Kodi JSON methods are implemented.
+*Note: This is a work in progress and not all Kodi JSON methods are implemented.*
 
 Example
 -------

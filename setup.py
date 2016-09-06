@@ -12,7 +12,7 @@ with open(os.path.join(path, 'requirements.txt')) as f:
   requirements = f.read().splitlines()
 
 setup(name='kodicontroller',
-      version='0.1',
+      version='0.0.1',
       description='Kodi controller',
       long_description=long_description,
       url='http://github.com/davgeo/kodicontroller',

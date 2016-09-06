@@ -16,5 +16,8 @@ tests/server_info.py
 # Egg info directories
 *.egg-info/
 
+# Build directory
+build/
+
 # Dist directory
 dist/
