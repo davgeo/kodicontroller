@@ -17,9 +17,11 @@ using port 8000 (username='user1', password='pwd'):
 
 .. code:: python
 
-  kodicontroller.VideoLibrary_GetMovies('192.168.0.1', '8000', 'user1', 'pwd')
+    controller = kodicontroller.KodiController()
+    controller.SetServer('192.168.0.1', '8000', 'user1', 'pwd')
+    controller.VideoLibrary_GetMovies()
 
-This will setup the Kodi JSON client give the provided server details and call
+This will setup the Kodi JSON client given the provided server details and call
 the VideoLibrary.GetMovies JSON method with the following parameters:
 
 .. code:: python
@@ -34,7 +36,7 @@ the VideoLibrary.GetMovies JSON method with the following parameters:
   movies = server.VideoLibrary.GetMovies(params)
 
 The response will then be parsed to extract an appropriate resume percentage and
-it will also download and locally cache any thumbnails.
+it will also download and (optionally) locally cache any thumbnails.
 
 Requirements
 ---------------
