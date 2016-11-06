@@ -607,7 +607,62 @@ class KodiController(object):
     raise NotImplementedError
 
   #################################################
-  # Application
+  # Files
+  #################################################
+  def Files_GetDirectory(self, directory):
+    params = {'directory': directory}
+    response = self.server.Files.GetDirectory(params)
+    try:
+      files = response['files']
+    except KeyError:
+      files = []
+    return files
+
+  def Files_GetFileDetails(self, file):
+    params = {'file': file}
+    response = self.server.Files.GetFileDetails(params)
+    try:
+      file_details = response['filedetails']
+    except KeyError:
+      file_details = []
+    return file_details
+
+  def Files_GetSources(self, media):
+    params = {'media': media}
+    response = self.server.Files.GetSources(params)
+    try:
+      sources = response['sources']
+    except KeyError:
+      sources = []
+    return sources
+
+  def Files_PrepareDownload(self):
+    raise NotImplementedError
+
+  #################################################
+  # Addons
+  #################################################
+  # Executes the given addon with the given parameters (if possible)
+  def Addons_ExecuteAddon(self):
+    raise NotImplementedError
+
+  # Gets the details of a specific addon
+  def Addons_GetAddonDetails(self, addonid):
+    params = {'addonid': addonid}
+    response = self.server.Addons.GetAddonDetails(params)
+    return response['addon']
+
+  # Gets all available addons
+  def Addons_GetAddons(self):
+    response = self.server.Addons.GetAddons()
+    return response['addons']
+
+  # Enables/Disables a specific addon
+  def Addons_SetAddonEnabled(self):
+    raise NotImplementedError
+
+  #################################################
+  # Favourites
   #################################################
   @CheckServerValid
   def Favourites_AddFavourite(self):
