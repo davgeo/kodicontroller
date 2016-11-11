@@ -106,9 +106,10 @@ class KodiController(object):
     if self.cache_thumbnail_dir is None or self.auth is None:
       return ''
     else:
-      try:
-        re.findall(r'.jpg', thumbnail)[0]
-      except IndexError:
+      thumbnail = thumbnail.strip('/')
+      ext = os.path.splitext(thumbnail)[1]
+
+      if ext not in ('.jpg', '.png'):
         return ''
       else:
         # Generate hash to avoid illegal characters in filepath (and give unique reference)
@@ -619,7 +620,77 @@ class KodiController(object):
     return files
 
   def Files_GetFileDetails(self, file):
-    params = {'file': file}
+    params = {'file': file,
+              'properties': ["title",
+                             "artist",
+                             "albumartist",
+                             "genre",
+                             "year",
+                             "rating",
+                             "album",
+                             "track",
+                             "duration",
+                             "comment",
+                             "lyrics",
+                             "musicbrainztrackid",
+                             "musicbrainzartistid",
+                             "musicbrainzalbumid",
+                             "musicbrainzalbumartistid",
+                             "playcount",
+                             "fanart",
+                             "director",
+                             "trailer",
+                             "tagline",
+                             "plot",
+                             "plotoutline",
+                             "originaltitle",
+                             "lastplayed",
+                             "writer",
+                             "studio",
+                             "mpaa",
+                             "cast",
+                             "country",
+                             "imdbnumber",
+                             "premiered",
+                             "productioncode",
+                             "runtime",
+                             "set",
+                             "showlink",
+                             "streamdetails",
+                             "top250",
+                             "votes",
+                             "firstaired",
+                             "season",
+                             "episode",
+                             "showtitle",
+                             "thumbnail",
+                             "file",
+                             "resume",
+                             "artistid",
+                             "albumid",
+                             "tvshowid",
+                             "setid",
+                             "watchedepisodes",
+                             "disc",
+                             "tag",
+                             "art",
+                             "genreid",
+                             "displayartist",
+                             "albumartistid",
+                             "description",
+                             "theme",
+                             "mood",
+                             "style",
+                             "albumlabel",
+                             "sorttitle",
+                             "episodeguide",
+                             "uniqueid",
+                             "dateadded",
+                             "size",
+                             "lastmodified",
+                             "mimetype",
+                             "specialsortseason",
+                             "specialsortepisode"]}
     response = self.server.Files.GetFileDetails(params)
     try:
       file_details = response['filedetails']
@@ -643,19 +714,47 @@ class KodiController(object):
   # Addons
   #################################################
   # Executes the given addon with the given parameters (if possible)
-  def Addons_ExecuteAddon(self):
-    raise NotImplementedError
+  def Addons_ExecuteAddon(self, addonid):
+    params = {'addonid': addonid}
+    response = self.server.Addons.ExecuteAddon(params)
+    return response
 
   # Gets the details of a specific addon
   def Addons_GetAddonDetails(self, addonid):
-    params = {'addonid': addonid}
+    params = {'addonid': addonid,
+              'properties': ["name",
+                             "version",
+                             "summary",
+                             "description",
+                             "path",
+                             "author",
+                             "thumbnail",
+                             "disclaimer",
+                             "fanart",
+                             "dependencies",
+                             "broken",
+                             "extrainfo",
+                             "rating",
+                             "enabled"]}
     response = self.server.Addons.GetAddonDetails(params)
-    return response['addon']
+    try:
+      addon = response['addon']
+    except KeyError:
+      addon = []
+    else:
+      self.ProcessThumbnails((addon, ))
+    return addon
 
   # Gets all available addons
-  def Addons_GetAddons(self):
-    response = self.server.Addons.GetAddons()
-    return response['addons']
+  def Addons_GetAddons(self, addontype='unknown', addoncontent='unknown'):
+    params = {'type': addontype,
+              'content': addoncontent}
+    response = self.server.Addons.GetAddons(params)
+    try:
+      addons = response['addons']
+    except KeyError:
+      addons = []
+    return addons
 
   # Enables/Disables a specific addon
   def Addons_SetAddonEnabled(self):
