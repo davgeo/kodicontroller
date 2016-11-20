@@ -619,8 +619,9 @@ class KodiController(object):
       files = []
     return files
 
-  def Files_GetFileDetails(self, file):
+  def Files_GetFileDetails(self, file, media='video'):
     params = {'file': file,
+              'media': media,
               'properties': ["title",
                              "artist",
                              "albumartist",
