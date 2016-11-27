@@ -446,7 +446,8 @@ class KodiController(object):
                             'tvshowid',
                             'episode',
                             'season',
-                            'uniqueid']}
+                            'uniqueid',
+                            'file']}
     response = self.server.Player.GetItem(params)
 
     item = response['item']
@@ -576,7 +577,8 @@ class KodiController(object):
                             'tvshowid',
                             'episode',
                             'season',
-                            'uniqueid']}
+                            'uniqueid',
+                            'file']}
 
     response = self.server.Playlist.GetItems(params)
 
