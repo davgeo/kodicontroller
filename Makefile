@@ -9,6 +9,12 @@ MODULE = kodicontroller
 init:
 	pip install -r requirements.txt
 
+# Clean build and dist directories
+.PHONY: clean
+clean:
+	rm -rf build
+	rm -rf dist
+
 # Build source and wheel distributions
 .PHONY: build
 build:
