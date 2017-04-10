@@ -94,12 +94,15 @@ class TestKodiController(unittest.TestCase):
 
   # Check Addon info
   def test_addons(self):
-    addons = self.controller.Addons_GetAddons()
+    self.controller.SetThumbnailCache(self.cache_dir)
+    addons = self.controller.Addons_GetAddons(addoncontent='video')
     for addon in addons:
-      self.do_print("Addon: {}".format(addon))
+      self.do_print("\nAddon: {}".format(addon))
       details = self.controller.Addons_GetAddonDetails(addon['addonid'])
-      self.do_print("Addon Details: {}".format(details))
-
+      self.do_print("\nAddon Details: {}".format(details))
+      self.controller.EnableLogging()
+      addon_dir = "plugin://{}".format(details['addonid'])
+      self.controller.Files_GetDirectory(addon_dir)
 
 if __name__ == '__main__':
   unittest.main()

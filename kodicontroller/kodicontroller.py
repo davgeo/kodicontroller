@@ -228,13 +228,19 @@ class KodiController(object):
                             'playcount',
                             'lastplayed',
                             'resume',
-                            'file']}
+                            'file',
+                            'firstaired',
+                            'specialsortseason',
+                            'specialsortepisode']}
 
     response = self.server.VideoLibrary.GetEpisodes(params)
     episodes = response['episodes']
 
     for item in episodes:
       item['episode'] = int(item['episode'])
+      item['season'] = int(item['season'])
+      item['specialsortseason'] = int(item['specialsortseason'])
+      item['specialsortepisode'] = int(item['specialsortepisode'])
 
     self.ProcessThumbnails(episodes)
     self.GetResumePercent(episodes)
